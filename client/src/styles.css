@@ -1,0 +1,457 @@
+/* --- 1. Global Variables & Reset --- */
+:root {
+    --color-primary: #8C52FF;       /* Dynamic Accent Color (e.g., Purple/Neon) */
+    --color-text-light: #E0E0E0;   /* Light text on dark background */
+    --color-background-dark: #121212; /* Very Dark Background */
+    --color-card-bg: #1A1A1A;       /* Slightly lighter card background */
+    --color-border: #333333;        /* Subtle divider lines */
+    --font-family-sans: 'Roboto', sans-serif;
+    --transition-speed: 0.3s;
+  }
+  
+  /* Basic Reset for consistent look across browsers */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: var(--font-family-sans);
+    background-color: var(--color-background-dark);
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  
+  /* --- 2. Navbar Styling --- */
+ .portfolio-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  /* Solid purple background */
+  background: #6a0dad;
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-item {
+  color: var(--color-text-light);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color var(--transition-speed);
+}
+
+.nav-item:hover {
+  color: #FFF70A;
+}
+
+/* Style for the Language Switcher */
+.language-switcher button {
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  cursor: pointer;
+  padding: 0 0.2rem;
+  transition: color var(--transition-speed);
+}
+.language-switcher button:hover {
+  color: #FFF70A; 
+}
+  
+  /* Hide admin link by default, we'll make a better entry later */
+  .admin-link {
+      display: none;
+  }
+  
+  /* --- 3. Responsive/Mobile Design Base --- */
+  @media (max-width: 768px) {
+    .portfolio-navbar {
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+    }
+    .navbar-links {
+      gap: 1rem;
+      flex-wrap: wrap; /* Allows links to wrap on small screens */
+      justify-content: center;
+    }
+  }
+  /* --- 4. General Layout and Containers --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .page-header {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+  }
+  .error-message {
+      color: red;
+      text-align: center;
+  }
+  
+  /* --- 5. Projects Grid and Card Styling --- */
+  .projects-grid {
+    display: grid;
+    /* Default: 1 column on small screens, adjusts as screen gets bigger */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 2rem;
+  }
+  
+  .project-card {
+    /* Glassmorphism/Dark Card Style */
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    cursor: pointer;
+  }
+  
+  .project-card:hover {
+    /* Dynamic effect on hover */
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  }
+  
+  .project-image-container {
+    height: 200px;
+    overflow: hidden;
+  }
+  .project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-speed);
+  }
+  .project-card:hover .project-image {
+      transform: scale(1.05); /* Image zoom on hover */
+  }
+  
+  .project-info {
+    padding: 1.5rem;
+  }
+  .project-info h3 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+  }
+  
+  /* 🎯 THE FIX: APPLY TRUNCATION TO THE DESCRIPTION PARAGRAPH 🎯 */
+  .project-info p { 
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    
+    /* 🎯 FIX: ADD LINE-HEIGHT FOR TRUNCATION 🎯 */
+    line-height: 1.5; /* Setting line height helps calculation */
+    
+    /* --- START TRUNCATION CODE --- */
+    overflow: hidden; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit text to exactly 3 lines */
+    -webkit-box-orient: vertical;
+    /* --- END TRUNCATION CODE --- */
+}
+  .project-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .project-link:hover {
+      text-decoration: underline;
+  }
+  /* --- 6. Admin Dashboard Styling --- */
+.admin-container {
+    padding-top: 4rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    background: var(--color-card-bg);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.project-form input,
+.project-form textarea {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: #242424; /* Darker input background */
+    color: var(--color-text-light);
+    font-size: 1rem;
+}
+
+.project-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.project-form input::placeholder,
+.project-form textarea::placeholder {
+    color: #888;
+}
+
+.submit-button {
+    background-color: var(--color-primary);
+    color: var(--color-background-dark);
+    padding: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color var(--transition-speed);
+}
+
+.submit-button:hover {
+    background-color: #6C3EB5; /* Slightly darker purple on hover */
+}
+
+.status-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+.error {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+/* --- 7. Admin Table Styling --- */
+.project-table-container {
+  overflow-x: auto; /* Makes table scrollable on small screens */
+  margin-top: 2rem;
+}
+
+.project-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.project-table th, .project-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-table th {
+  background-color: #2a2a2a;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.action-buttons button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.edit-button {
+  background-color: var(--color-primary);
+  color: var(--color-background-dark);
+}
+
+.delete-button {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.cancel-button {
+  background-color: #555;
+  color: white;
+}
+/* --- 8. Home Page Styling --- */
+.home-container {
+  padding-top: 4rem;
+  text-align: center;
+}
+
+.hero-section {
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+
+.hero-greeting {
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.hero-bio {
+  font-size: 1.2rem;
+  color: var(--color-text-light);
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background-color: var(--color-primary);
+  color: var(--color-background-dark);
+  text-decoration: none;
+  padding: 0.8rem 2rem;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color var(--transition-speed);
+  display: inline-block;
+}
+
+.cta-button:hover {
+  background-color: #6C3EB5;
+}
+
+.skills-section {
+  padding: 3rem 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: var(--color-text-light);
+  margin-bottom: 2rem;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.skill-item {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-primary);
+  color: var(--color-text-light);
+  padding: 0.7rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* --- 9. Contact Page Styling --- */
+.contact-container {
+  padding-top: 4rem;
+  max-width: 600px;
+}
+
+.contact-text {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--color-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background-color: #242424;
+  color: var(--color-text-light);
+  font-size: 1rem;
+}
+
+.contact-note {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+/* --- 10. Footer Styling --- */
+.app-footer {
+  background-color: #6a0dad; 
+  border-top: none; 
+  
+  /* 🎯 THE CHANGE: Reduced vertical padding from 2rem to 1rem 🎯 */
+  padding: 0.5rem 0; 
+  
+  margin-top: 4rem; 
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  width: 100%;
+  
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5); 
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.footer-links a {
+  color: var(--color-text-light);
+  text-decoration: none;
+  margin-left: 1.5rem;
+  transition: color var(--transition-speed);
+}
+
+.footer-links a:hover {
+  color: #FFF70A;
+}
+
+.footer-copyright {
+  color: #ffffff;
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+      flex-direction: column;
+      text-align: center;
+  }
+  .footer-links {
+      margin-top: 1rem;
+  }
+  .footer-links a {
+      margin: 0 0.5rem;
+  }
+}
